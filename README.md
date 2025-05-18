@@ -1,6 +1,8 @@
 # Power BI Reference
 
-[Data Analysis Expressions (DAX)](https://learn.microsoft.com/en-us/dax/)
+> [Data Analysis Expressions (DAX)](https://learn.microsoft.com/en-us/dax/)
+
+[**Functions**](#functions)  
 
 0. [Misc](#misc)
 1. [Aggregate](#aggregate)
@@ -19,9 +21,22 @@
 14. [Text](#text)
 15. Time intelligence
 
+[**Statements**](#statements)
+
+1. DEFINE
+2. EVALUATE
+3. MEASURE
+4. ORDER BY
+5. START AT
+6. [VAR](#var)
+
 <!-- ----------------------------------------------------------------------- -->
 
-## MISC
+## FUNCTIONS
+
+<!-- ----------------------------------------------------------------------- -->
+
+### MISC
 
 ```sql
 'table_name'[column_name] = "value"
@@ -31,7 +46,7 @@
 
 <!-- ----------------------------------------------------------------------- -->
 
-## AGGREGATE
+### AGGREGATE
 
 ```sql
 AVERAGE(column)
@@ -65,7 +80,7 @@ COUNTROWS(table)
 
 <!-- ----------------------------------------------------------------------- -->
 
-## FILTER
+### FILTER
 
 ```sql
 CALCULATE(expression, filter1, filter2, ...) -- filters are optional
@@ -81,7 +96,7 @@ REMOVEFILTERS(table_or_column, column...) -- parameters are optional
 
 <!-- ----------------------------------------------------------------------- -->
 
-## INFORMATION
+### INFORMATION
 
 ```sql
 ISINSCOPE(column)
@@ -106,7 +121,7 @@ IF(
 
 <!-- ----------------------------------------------------------------------- -->
 
-## OTHER
+### OTHER
 
 ```sql
 BLANK()
@@ -122,15 +137,50 @@ IF(
 
 <!-- ----------------------------------------------------------------------- -->
 
-## LOGICAL
+### LOGICAL
 
 ```sql
 IF(logical_test, value_if_true, value_if_false) -- value_if_false is optional
 ```
 
+```sql
+SWITCH(expression, value, result)
+
+-- extra [value, result] pairs and [else] are optional
+SWITCH(expression, value, result[, value, result] ... [, else])
+
+SWITCH(
+  expression, 
+  
+  value, 
+  result
+  
+  [, value, 
+  result]
+  
+  ...
+  
+  [, else]
+)
+```
+
+* switch case
+* can be used to avoid nested IF statements
+
+```sql
+TRUE()
+FALSE()
+```
+
+#### OPERATOR
+
+```SQL
+NOT(value_or_expression) -- boolean
+```
+
 <!-- ----------------------------------------------------------------------- -->
 
-## TABLE MANIPULATION
+### TABLE MANIPULATION
 
 ```sql
 VALUES(table_or_column)
@@ -144,21 +194,41 @@ VALUES(table_or_column)
 * `table` - table with same columns -->
 
 ```sql
+SUMMARIZE(table, groupby_column, "alias", expression) -- groupby_column is optional
+SUMMARIZE(table, groupby_column[, groupby_column] ... [, "alias", expression] ...)
+```
+
+```sql
 ADDCOLUMNS(table, "alias", expression)
 ADDCOLUMNS(table, "alias1", expression1, "alias2", expression2, ...)
 ```
 
 <!-- ----------------------------------------------------------------------- -->
 
-## TEXT
+### TEXT
 
 ```sql
 FORMAT(value_or_expression, format_string, locale_name) -- locale_name is optional
 
 -- example: add commas and truncate decimals
-FORMAT(value_or_expression, "#,##0") --> turns 130000 to 130,000
+FORMAT(value_or_expression, "#,###0") --> turns 130000 to 130,000
 ```
 
 * `FORMAT` changes data type to **text**
 * `value_or_expression` - if blank, returns an empty string
 * `format_string` - if blank, formats with a "general number" or "general date"
+
+<!-- ----------------------------------------------------------------------- -->
+
+## STATEMENTS
+
+<!-- ----------------------------------------------------------------------- -->
+
+## VAR
+
+```sql
+VAR name = expression
+
+RETURN
+...
+```
