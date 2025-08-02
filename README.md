@@ -1,6 +1,7 @@
 # Power BI Reference
 
-> [Data Analysis Expressions (DAX)](https://learn.microsoft.com/en-us/dax/)
+> [Data Analysis Expressions (DAX)](https://learn.microsoft.com/en-us/dax/)  
+> [DAX guide](https://dax.guide/)
 
 [**Functions**](#functions)  
 
@@ -29,6 +30,8 @@
 4. ORDER BY
 5. START AT
 6. [VAR](#var)
+
+[**Clear Metadata**](#clear-metadata)
 
 <!-- ----------------------------------------------------------------------- -->
 
@@ -77,6 +80,10 @@ COUNTROWS(table)
 ```
 
 * often used to count the number of rows that result from filtering a table
+
+```sql
+MAXX(table, expression, variant) -- variant is optional
+```
 
 <!-- ----------------------------------------------------------------------- -->
 
@@ -203,6 +210,11 @@ ADDCOLUMNS(table, "alias", expression)
 ADDCOLUMNS(table, "alias1", expression1, "alias2", expression2, ...)
 ```
 
+```sql
+TOPN(#_of_rows, table, orderby_expression, order) -- order is optional
+TOPN(#_of_rows, table, orderby_expression, order[, orderby_expression, order] ...)
+```
+
 <!-- ----------------------------------------------------------------------- -->
 
 ### TEXT
@@ -232,3 +244,21 @@ VAR name = expression
 RETURN
 ...
 ```
+
+<!-- ----------------------------------------------------------------------- -->
+
+## CLEAR METADATA
+
+<!-- ----------------------------------------------------------------------- -->
+
+Step 1:
+
+* Home > Transform data > Data source settings > Edit Permissions > Credentials > Delete > OK
+
+or
+
+* Home > Transform data > Data source settings > Clear Permissions
+
+Step 2:
+
+* Home > Transform data > Transform data > `Source{[Schema="...`
